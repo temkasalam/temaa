@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Color Puzzle</title>
+
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+background:linear-gradient(135deg,#1e1e2f,#3a3a6a);
+color:white;
+}
+
+h1{
+margin-top:20px;
+}
+
+#rgb{
+font-size:28px;
+margin:20px;
+font-weight:bold;
+}
+
+.container{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:20px;
+margin-top:30px;
+}
+
+.box{
+width:120px;
+height:120px;
+border-radius:15px;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 10px 20px rgba(0,0,0,0.4);
+}
+
+.box:hover{
+transform:scale(1.1);
+}
+
+#message{
+margin-top:20px;
+font-size:22px;
+}
+
+button{
+margin-top:20px;
+padding:10px 20px;
+border:none;
+border-radius:10px;
+font-size:18px;
+background:#ff6b6b;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#ff4040;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🎨 Color Puzzle</h1>
+
+<p>Найди цвет:</p>
+
+<div id="rgb"></div>
+
+<div class="container" id="game"></div>
+
+<p id="message"></p>
+
+<button onclick="startGame()">New Game</button>
+
+<script>
+
+let colors=[];
+let correct;
+
+function randomColor(){
+let r=Math.floor(Math.random()*256);
+let g=Math.floor(Math.random()*256);
+let b=Math.floor(Math.random()*256);
+return `rgb(${r},${g},${b})`;
+}
+
+function startGame(){
+
+let game=document.getElementById("game");
+game.innerHTML="";
+colors=[];
+
+for(let i=0;i<6;i++){
+colors.push(randomColor());
+}
+
+correct=colors[Math.floor(Math.random()*6)];
+
+document.getElementById("rgb").innerText=correct;
+
+colors.forEach(color=>{
+
+let box=document.createElement("div");
+box.className="box";
+box.style.background=color;
+
+box.onclick=function(){
+
+if(color===correct){
+document.getElementById("message").innerText="✅ Correct!";
+}else{
+box.style.opacity="0.2";
+document.getElementById("message").innerText="❌ Try again!";
+}
+
+}
+
+game.appendChild(box);
+
+});
+
+document.getElementById("message").innerText="";
+
+}
+
+startGame();
+
+</script>
+
+</body>
+</html>
